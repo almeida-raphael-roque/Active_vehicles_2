@@ -12,7 +12,7 @@ logging.basicConfig(
 
 today = pd.Timestamp.today().date()
 yesterday = today - timedelta(days=1)
-yesterday_str = yesterday.strftime('%Y-%m-%d')
+
 
 path = r"C:\Users\raphael.almeida\OneDrive - Grupo Unus\analise de dados - Arquivos em excel\CAMPANHA_RANKING_ATIVACOES.xlsx"
 
@@ -47,10 +47,8 @@ class Extract:
                 if statusx == 'CANCELADO':
                     globals()[nome_variavel] = len(self.df_cancel[
                         (self.df_cancel['empresa']==empresax)&
-                        (self.df_cancel['data_cancelamento']==yesterday) #atenção à essa condição (verificar)
+                        (self.df_cancel['data_cancelamento'].dt.date==yesterday) #atenção à essa condição (verificar)
                         ])
-                elif statusx == 'ATIVO':
-                    globals()[nome_variavel] = len(self.df_ativ[self.df_ativ['empresa']==empresax])
                 else:
                     globals()[nome_variavel] = contar_placas(statusx, empresax)
 
