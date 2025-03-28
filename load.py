@@ -142,7 +142,7 @@ class Load:
         pyautogui.hotkey('shift', 'tab')
         for _ in range(2):
             pyautogui.press('right')                
-        for _ in range(4):
+        for _ in range(5):
             pyautogui.press('down') 
         pyautogui.press('enter')
         time.sleep(1)
