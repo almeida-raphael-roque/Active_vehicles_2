@@ -79,9 +79,11 @@ class Extract:
 
         tabela_df = pd.DataFrame(tabela, index=índices)
 
-        tabela_df.applymap(lambda x: f'{x:,.0f}'.replace(',','.') if isinstance(x, (int,float)) else x)
+        tabela_df = tabela_df.applymap(lambda x: f'{x:,.0f}'.replace(',','.') if isinstance(x, (int,float)) else x)
 
         print(tabela_df)
+
+
 
         return tabela_df
 

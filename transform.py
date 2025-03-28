@@ -18,8 +18,6 @@ class Transform:
 
     def transform_dataframe(tabela_df):
 
-        tabela_df.applymap(lambda x: f'{x:,.0f}'.replace(',','.') if isinstance(x, (int,float)) else x)
-
         # Cria a figura para o gráfico
         fig, ax = plt.subplots(figsize=(8, 4))  # Ajuste o tamanho conforme necessário
 
