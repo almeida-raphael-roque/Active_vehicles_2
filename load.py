@@ -90,18 +90,18 @@ class Load:
             try:
                 outlook = win32.Dispatch("Outlook.Application")
                 email = outlook.CreateItem(0)
-                email.To = "dados13@grupounus.com.br"
+                email.To = "dados13@grupounus.com.br; dados03@grupounus.com.br; supervisao.dados@grupounus.com.br"
                 email.Subject = f'[ACOMPANHAMENTO DIÁRIO DE PLACAS] - Relatório de placas ativadas do dia {analyzed_day}'
                 email.HTMLBody = f"""
                     <html>
                     <head>
-                        {css_style}  <!-- Inclui o CSS no e-mail -->
+                        {css_style}  
                     </head>
                     <body>
                         <p>Prezado(a),</p>
-                        <p>A seguir, o montante de placas ativas por empresa, bem como suas movimentações:</p>
+                        <p>A seguir, o montante de placas ativas por empresa do dia {analyzed_day}, bem como suas movimentações:</p>
 
-                        {tabela_html}  <!-- Insere a tabela formatada -->
+                        {tabela_html}  
 
                         <p>Atenciosamente,</p>
                         <p>Equipe Análise de Dados - Grupo Unus</p>
