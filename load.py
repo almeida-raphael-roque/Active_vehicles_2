@@ -16,6 +16,9 @@ logging.basicConfig(
         logging.StreamHandler()  # Garante logs no console
     ]
 )
+
+yesterday_format = (pd.Timestamp.today()-pd.Timedelta(days=1)).date().strftime('%d/%m/%Y')
+
 class Load:
     def to_outlook(tabela_df, df_ativ):
 
@@ -24,9 +27,6 @@ class Load:
 
             # Garantir que a coluna de data está no formato correto
             df_ativ['data_ativacao'] = pd.to_datetime(df_ativ['data_ativacao'])
-
-            # Pega a data mais recente da coluna
-            yesterday = (pd.Timestamp.today()-pd.Timedelta(days=1)).date()
 
             # Converte DataFrame para tabela HTML com índice
             tabela_html = tabela_df.to_html(classes='tabela', index=True)  # Agora inclui o índice
@@ -90,8 +90,8 @@ class Load:
             try:
                 outlook = win32.Dispatch("Outlook.Application")
                 email = outlook.CreateItem(0)
-                email.To = "dados13@grupounus.com.br; dados03@grupounus.com.br; supervisao.dados@grupounus.com.br"
-                email.Subject = f'[ACOMPANHAMENTO DIÁRIO DE PLACAS] - Relatório de placas ativadas do dia {yesterday}'
+                email.To = "dados13@grupounus.com.br"
+                email.Subject = f'[ACOMPANHAMENTO DIÁRIO DE PLACAS] - Relatório de placas ativadas do dia {yesterday_format}'
                 email.HTMLBody = f"""
                     <html>
                     <head>
@@ -99,7 +99,7 @@ class Load:
                     </head>
                     <body>
                         <p>Prezado(a),</p>
-                        <p>A seguir, o montante de placas ativas por empresa do dia {yesterday}, bem como suas movimentações:</p>
+                        <p>A seguir, o montante de placas ativas por empresa do dia {yesterday_format}, bem como suas movimentações:</p>
 
                         {tabela_html}  
 
@@ -121,7 +121,7 @@ class Load:
     def to_whatsapp(df_ativ):   
 
         # Pega a data mais recente da coluna
-        yesterday = df_ativ['data_ativacao'].max().date().strftime('%d/%m/%Y')
+        
 
         pyautogui.hotkey('win', 'e')
         time.sleep(2)
@@ -168,13 +168,13 @@ class Load:
         time.sleep(1)
         pyautogui.press('enter')  
         time.sleep(4)
-        pyautogui.write('diego poletto mayer')  
+        pyautogui.write('61981109691')  
         time.sleep(1)
         pyautogui.press('down')
         time.sleep(1)
         pyautogui.press('enter')
         time.sleep(1)
-        pyautogui.write(f'Tabela de placas ativas do dia {yesterday}')  
+        pyautogui.write(f'Tabela de placas ativas do dia {yesterday_format}')  
         pyautogui.hotkey('ctrl', 'v')
         time.sleep(1)
         for _ in range(4):

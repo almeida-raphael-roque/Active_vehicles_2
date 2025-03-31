@@ -46,6 +46,12 @@ class Extract:
                         (self.df_cancel['empresa']==empresax)&
                         (self.df_cancel['data_cancelamento'].dt.date==yesterday) #atenção à essa condição (verificar)
                         ])
+                elif statusx == 'ATIVO':
+                    globals()[nome_variavel] = len(self.df_ativ[
+                        (self.df_ativ['empresa']==empresax)&
+                        (self.df_ativ['status']==statusx)
+                    ])
+                                    
                 else:
                     globals()[nome_variavel] = contar_placas(statusx, empresax)
 
