@@ -1,5 +1,4 @@
 import pandas as pd
-from datetime import timedelta
 import logging
 
 logging.basicConfig(
@@ -10,13 +9,10 @@ logging.basicConfig(
     ]
 )
 
-today = pd.Timestamp.today().date()
-yesterday = today - timedelta(days=1)
-
+today = pd.Timestamp.today()
+yesterday = (today - pd.Timedelta(days=1)).date()
 
 path = r"C:\Users\raphael.almeida\OneDrive - Grupo Unus\analise de dados - Arquivos em excel\CAMPANHA_RANKING_ATIVACOES.xlsx"
-
-
 
 class Extract:
 
@@ -30,7 +26,8 @@ class Extract:
             return len(
                     self.df_ativ[
                         (self.df_ativ['status']==status)&
-                        (self.df_ativ['empresa']==empresa)
+                        (self.df_ativ['empresa']==empresa)&
+                        (self.df_ativ['data_ativacao'].dt.date==yesterday)
                     ]
                 )
 
