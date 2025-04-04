@@ -17,7 +17,8 @@ logging.basicConfig(
     ]
 )
 
-yesterday_format = (pd.Timestamp.today()-pd.Timedelta(days=1)).date().strftime('%d/%m/%Y')
+today = pd.Timestamp.today()
+yesterday_format = (today-pd.Timedelta(days=1)).date().strftime('%d/%m/%Y')
 
 class Load:
     def to_outlook(tabela_df, df_ativ):
@@ -120,9 +121,7 @@ class Load:
 
     def to_whatsapp(df_ativ):   
 
-        # Pega a data mais recente da coluna
-        
-
+        # Pega a data mais recente da coluna61981109691
         pyautogui.hotkey('win', 'e')
         time.sleep(2)
         pyautogui.hotkey('shift', 'tab')
@@ -136,7 +135,7 @@ class Load:
         pyautogui.hotkey('shift', 'tab')
         pyautogui.press('right')
         pyautogui.hotkey('shift', 'down')
-        for _ in range(6):
+        for _ in range(7):
             pyautogui.press('down')
         pyautogui.press('enter')
         time.sleep(1)
@@ -145,7 +144,7 @@ class Load:
         pyautogui.hotkey('shift', 'tab')
         for _ in range(2):
             pyautogui.press('right')                
-        for _ in range(5):
+        for _ in range(6):
             pyautogui.press('down') 
         pyautogui.press('enter')
         time.sleep(1)
@@ -180,8 +179,7 @@ class Load:
         for _ in range(4):
             pyautogui.press('tab')
         time.sleep(1)
-        pyautogui.press('enter')
-
+        pyautogui.press('enter')    
 
         logging.info('\n ----------------------------------------------------------------------------------')
         logging.info('\n Processo de Carregamento de Dados 4 concluido com sucesso!')
@@ -192,12 +190,14 @@ if __name__ == '__main__':
     #instanciar significa chamar a classe primeiro e colocar em uma variável, isso é criar uma instância de classe
     #se fosse chamar com Extract.extract_dataframe() = chama o método diretamente da classe
 
-    extract_instance = Extract() #chamando a instância
+    extract_instance = Extract() #chamando a instância de classe
 
     tabela_df = extract_instance.extract_dataframe()  # chama tabela_df instanciada
 
     #agora eu posso usar a instância como parâmetro direto nos outros arquivos
 
     Transform.transform_dataframe(tabela_df)  # Passa tabela_df para Transform
-    Load.to_outlook(tabela_df, extract_instance.df_ativ)  # Passa tabela_df e df_ativ (atributo de instância) para Load
-    Load.to_whatsapp(extract_instance.df_ativ) 
+
+    if today.weekday() not in (0, 6, 5):
+        Load.to_outlook(tabela_df, extract_instance.df_ativ)  # Passa tabela_df e df_ativ (atributo de instância) para Load
+        Load.to_whatsapp(extract_instance.df_ativ) 
