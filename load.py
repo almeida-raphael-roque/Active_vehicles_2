@@ -91,7 +91,7 @@ class Load:
             try:
                 outlook = win32.Dispatch("Outlook.Application")
                 email = outlook.CreateItem(0)
-                email.To = "dados13@grupounus.com.br"
+                email.To = "dados13@grupounus.com.br; supervisao.dados@grupounus.com.br; dados03@grupounus.com.br"
                 email.Subject = f'[ACOMPANHAMENTO DIÁRIO DE PLACAS] - Relatório de placas ativadas do dia {yesterday_format}'
                 email.HTMLBody = f"""
                     <html>
@@ -200,4 +200,4 @@ if __name__ == '__main__':
 
     if today.weekday() not in (0, 6, 5):
         Load.to_outlook(tabela_df, extract_instance.df_ativ)  # Passa tabela_df e df_ativ (atributo de instância) para Load
-        Load.to_whatsapp(extract_instance.df_ativ) 
+        #Load.to_whatsapp(extract_instance.df_ativ) 
