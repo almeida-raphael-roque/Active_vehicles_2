@@ -198,6 +198,6 @@ if __name__ == '__main__':
 
     Transform.transform_dataframe(tabela_df)  # Passa tabela_df para Transform
 
-    if today.weekday() not in (0, 6, 5):
+    if today.weekday() not in (5, 6):
         Load.to_outlook(tabela_df, extract_instance.df_ativ)  # Passa tabela_df e df_ativ (atributo de instância) para Load
         #Load.to_whatsapp(extract_instance.df_ativ) 
