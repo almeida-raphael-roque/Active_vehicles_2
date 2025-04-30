@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 from transform import Transform
 from extract import Extract
-import pyautogui
+#import pyautogui
 import win32com.client as win32
 import pythoncom
 import time

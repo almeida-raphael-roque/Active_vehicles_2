@@ -12,7 +12,7 @@ logging.basicConfig(
 today = pd.Timestamp.today()
 yesterday = (today - pd.Timedelta(days=1)).date()
 
-path = r"C:\Users\raphael.almeida\OneDrive - Grupo Unus\analise de dados - Arquivos em excel\CAMPANHA_RANKING_ATIVACOES.xlsx"
+path = r"C:\Users\raphael.almeida\OneDrive - Grupo Unus\analise de dados - Arquivos em excel\placas_movimentacoes.xlsx"
 
 class Extract:
 
