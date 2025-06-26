@@ -18,7 +18,14 @@ logging.basicConfig(
 )
 
 today = pd.Timestamp.today()
-yesterday_format = (today-pd.Timedelta(days=1)).date().strftime('%d/%m/%Y')
+
+if today.weekday() != 0:
+    day_format = (today-pd.Timedelta(days=1)).date().strftime('%d/%m/%Y')
+else:
+    day_format = (today-pd.Timedelta(days=3)).date().strftime('%d/%m/%Y')
+
+    
+
 
 class Load:
     def to_outlook(tabela_df, df_ativ):
@@ -92,7 +99,7 @@ class Load:
                 outlook = win32.Dispatch("Outlook.Application")
                 email = outlook.CreateItem(0)
                 email.To = "dados13@grupounus.com.br; supervisao.dados@grupounus.com.br; dados03@grupounus.com.br"
-                email.Subject = f'[ACOMPANHAMENTO DIÁRIO DE PLACAS] - Relatório de placas ativadas do dia {yesterday_format}'
+                email.Subject = f'[ACOMPANHAMENTO DIÁRIO DE PLACAS] - Relatório de placas ativadas do dia {day_format}'
                 email.HTMLBody = f"""
                     <html>
                     <head>
@@ -100,7 +107,7 @@ class Load:
                     </head>
                     <body>
                         <p>Prezado(a),</p>
-                        <p>A seguir, o montante de placas ativas por empresa do dia {yesterday_format}, bem como suas movimentações:</p>
+                        <p>A seguir, a quantidade de placas ativas por empresa do dia {day_format}, bem como suas movimentações:</p>
 
                         {tabela_html}  
 

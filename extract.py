@@ -1,5 +1,6 @@
 import pandas as pd
 import logging
+import datetime as dt
 
 logging.basicConfig(
     level=logging.INFO,  # Exibe mensagens a partir de INFO
@@ -27,13 +28,13 @@ class Extract:
                     self.df_ativ[
                         (self.df_ativ['status']==status)&
                         (self.df_ativ['empresa']==empresa)&
-                        (self.df_ativ['data_ativacao'].dt.date==yesterday)
+                        (self.df_ativ['data_ativacao'].dt.date == (yesterday if today.weekday() != 0 else (today - pd.Timedelta(days=3)).date()))
                     ]
                 )
 
 
         lista_empresas = ['Segtruck', 'Stcoop', 'Viavante']
-        lista_status = ['ATIVO', 'NOVO', 'RENOVAÇÃO', 'MIGRAÇÃO', 'REATIVAÇÃO', 'CANCELADO'] #talvez incluir reativação 
+        lista_status = ['ATIVO', 'NOVO', 'RENOVAÇÃO', 'MIGRAÇÃO', 'REATIVAÇÃO', 'CANCELADO'] 
 
 
         for empresax in lista_empresas:
@@ -44,7 +45,7 @@ class Extract:
                 if statusx == 'CANCELADO':
                     globals()[nome_variavel] = len(self.df_cancel[
                         (self.df_cancel['empresa']==empresax)&
-                        (self.df_cancel['data_cancelamento'].dt.date==yesterday) #atenção à essa condição (verificar)
+                        (self.df_cancel['data_cancelamento'].dt.date==(yesterday if today.weekday() != 0 else (today-pd.Timedelta(days=3)).date())) 
                         ])
                 elif statusx == 'ATIVO':
                     globals()[nome_variavel] = len(self.df_ativ[
