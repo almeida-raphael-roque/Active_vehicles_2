@@ -13,7 +13,7 @@ logging.basicConfig(
 today = pd.Timestamp.today()
 yesterday = (today - pd.Timedelta(days=1)).date()
 
-path = r"C:\Users\raphael.almeida\OneDrive - Grupo Unus\analise de dados - Arquivos em excel\CAMPANHA_RANKING_ATIVACOES.xlsx"
+path = r"C:\Users\raphael.almeida\OneDrive - Grupo Unus\analise de dados - Arquivos em excel\placas_movimentacoes.xlsx"
 
 class Extract:
 
@@ -42,12 +42,12 @@ class Extract:
             for statusx in lista_status:
                 nome_variavel = f'{statusx}_{empresax}'
 
-                if statusx == 'CANCELADO': #cancelado feito à parte pois está em outra planilha: CANCELAMENTOS
+                if statusx == 'CANCELADO':
                     globals()[nome_variavel] = len(self.df_cancel[
                         (self.df_cancel['empresa']==empresax)&
                         (self.df_cancel['data_cancelamento'].dt.date==(yesterday if today.weekday() != 0 else (today-pd.Timedelta(days=3)).date())) 
                         ])
-                elif statusx == 'ATIVO': # o status ATIVO é diferente pois ele não leva em consideração a data de ativação e está mesclado com as movimentações na mesma planilha de ATIVAÇÕES
+                elif statusx == 'ATIVO':
                     globals()[nome_variavel] = len(self.df_ativ[
                         (self.df_ativ['empresa']==empresax)&
                         (self.df_ativ['status']==statusx)
